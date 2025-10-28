@@ -15,18 +15,29 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection (local)
-mongoose.connect('mongodb://localhost:27017/scrum_dashboard', {
+// MongoDB Atlas connection
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('✅ Conectado a MongoDB Atlas');
+})
+.catch((error) => {
+  console.error('❌ Error conectando a MongoDB:', error);
 });
 
 
 // uso de las rutas
 
+
 // Ruta por defecto
 app.get('/', (req, res) => {
-  res.json({ message: 'Scrum Dashboard API running!' });
+  res.json({ 
+    message: 'Scrum Dashboard API running!',
+    database: 'MongoDB Atlas',
+    status: 'Connected'
+  });
 });
 
 //Escucha del app en el puerto
