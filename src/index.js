@@ -4,6 +4,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 // importamos las rutas
+import sprintRoutes from './routes/sprints.js';
+import taskRoutes from './routes/tasks.js';
+import teamRoutes from './routes/team.js';
 
 
 dotenv.config();
@@ -27,9 +30,10 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error('❌ Error conectando a MongoDB:', error);
 });
 
-
 // uso de las rutas
-
+app.use('/api/sprints', sprintRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/team', teamRoutes);
 
 // Ruta por defecto
 app.get('/', (req, res) => {
@@ -42,5 +46,5 @@ app.get('/', (req, res) => {
 
 //Escucha del app en el puerto
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port http://localhost:${PORT}`);
 });
